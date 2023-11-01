@@ -1,5 +1,4 @@
 # if-else
-
 friends = ["Rolf", "Massimo", "Laura", "Nacho", "Clara", "Jose"]
 family = ["kris", "Mario", "Jose", "Kimberly", "Kate"]
 user_name = input("Enter your name ")
@@ -116,4 +115,75 @@ print(list(enumerate(friends)))
 # similar result as zip
 
 # functions in python
+cars = [{"make": "Ford", "model": "Fiesta", "mileage": 23000, "fuel_consumed": 460},
+       {"make": "Royal Enfield", "model": "GT 650", "mileage": 43000, "fuel_consumed": 440},
+       {"make": "Royal Enfield", "model": "Bullet 500", "mileage": 13000, "fuel_consumed": 560}]
 
+def calculate_mpg(car_to_calculate):
+    mpg = car_to_calculate["mileage"]//car_to_calculate["fuel_consumed"]
+    return mpg
+def car_name(car_to_calculate):
+    name = f"{car_to_calculate['make']} {car_to_calculate['model']}"
+    print(f"{name} of vehicle")
+
+for car in cars:
+    mpg_val = calculate_mpg(car)
+    print(mpg_val)
+    car_name(car)
+
+# default value for parameters
+def add(x, y = 3):
+    total = x+y
+    return total
+print(add(x=5, y=2)) # named arguments
+# print(add(x=5,y)) error an unamed argument can be used after an argument that is named
+# print(add(y=2)) positional argument missing error
+# print(add()) add() missing 1 required positional argument: 'x'
+# Note : when python defines a function, it also stores default value
+default_y = 3
+def add(x, y = default_y):
+    total = x+y
+    print(total)
+add(2)
+default_y = 4
+add(2) # still 5 will be printed
+
+#lambda functions in python
+divide = lambda x, y: x/y
+# lamda x, y: x/y without any assingment variable will be destroyed as soon as it is created
+print(divide(14,2))
+# but this would work fine
+print((lambda x,y: x/y)(14, 2))
+
+# lets take an example
+average = lambda sequence: sum(sequence)//len(sequence)
+students = [
+    {"name": "Rani","grades":(56, 77, 89)},
+    {"name": "Rocky", "grades":(89, 99, 98)}
+]
+for student in students:
+    print(average(student["grades"]))
+
+# First Class functions in python
+def greet():
+    print("Are you lost babygirl ?")
+hello = greet
+hello()
+
+operations = {
+    "average" : lambda seq : sum(seq)//len(seq),
+    "sum" : sum,
+    "top" : max
+}
+students = [
+    {"name" : "Ananya" , "grades" :(90,98,100)},
+    {"name" : "Madhuri", "grades" : (78, 34, 22)}
+]
+
+for student in students:
+    name = student["name"]
+    grades = student["grades"]
+    print(f"Student {name}")
+    op = input(" Enter 'average', 'sum' or 'top'")
+    op_func = operations[op]
+    print(op_func(grades))
