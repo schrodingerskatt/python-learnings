@@ -76,3 +76,10 @@ class Foo:
         print(cls.__name__)
 my_obj = Foo()
 my_obj.hi()
+
+class Bar:
+    @staticmethod
+    def hi():
+        print("Hello, I am here")
+another_obj = Bar()
+another_obj.hi()
