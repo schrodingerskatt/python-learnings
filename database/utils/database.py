@@ -3,9 +3,10 @@ concerned with storing and retrieving books from csv file.
 Format of the csv file :
 name,author,read\n
 '''
-import sqlite3
-#books_file = 'books.txt'
 
+#books_file = 'books.txt'
+from typing import List, Tuple
+from utils.database_connection import DatabaseConnection
 '''def add_book(name, author):
     with open(books_file, 'a') as file:
         file.write(f'{name},{author},0')
@@ -38,44 +39,38 @@ def delete_book(name):
     books = [book for book in books if book['name']!= name]
     _save_all_books(books)'''
 
+Book = Tuple[int, str, str, int]
 
 # creating a book table
-def create_book_table():
-    connection = sqlite3.connect('data.db')
-    cursor = connection.cursor()
-    cursor.execute('CREATE TABLE IF NOT EXISTS books(name text primary key, author text, read integer)')
-    connection.commit()
-    connection.close()
+def create_book_table()->None:
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute('CREATE TABLE IF NOT EXISTS books(name text primary key, author text, read integer)')
 
 # inserting the data into table
-def add_book(name, author):
-    connection = sqlite3.connect('data.db')
-    cursor = connection.cursor()
-    cursor.execute('INSERT INTO books VALUES(?,?,0)',(name, author))
-    connection.commit()
-    connection.close()
+def add_book(name, author)->None:
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute('INSERT INTO books VALUES(?,?,0)',(name, author))
+    
 
-def get_all_books():
-    connection = sqlite3.connect('data.db')
-    cursor = connection.cursor()
-    cursor.execute('SELECT * from books')
+def get_all_books()->List[Book]:
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute('SELECT * from books')
     # no need to commit because we are not adding any new data
-    books = [{'name':row[0], 'author': row[1], 'read':row[2]} for row in cursor.fetchall()] # gives list of tuples [(name, author, read), (name, author, read)]
-    connection.close()
+        books = cursor.fetchall()  # gives list of tuples [(name, author, read), (name, author, read)]
     return books
 
-def mark_book_as_read(name):
-    connection = sqlite3.connect('data.db')
-    cursor = connection.cursor()
+def mark_book_as_read(name)->None:
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute('UPDATE books SET read = 1 WHERE name = ?',(name,))
 
-    cursor.execute('UPDATE books SET read = 1 WHERE name = ?',(name,))
-    connection.commit()
-    connection.close()
 
-def delete_book(name):
-    connection = sqlite3.connect('data.db')
-    cursor = connection.cursor()
-    cursor.execute('DELETE FROM books WHERE name = ?',(name,))
-    connection.commit()
-    connection.close()
+def delete_book(name)->None:
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute('DELETE FROM books WHERE name = ?',(name,))
+
 create_book_table()

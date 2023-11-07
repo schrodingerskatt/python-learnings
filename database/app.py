@@ -30,10 +30,10 @@ def prompt_add_book():
     database.add_book(name,author)
 
 def list_books():
-    books = database.get_all_books()
-    for book in books:
-        read = 'YES' if book['read'] else 'NO'
-        print(f"{book['name']} by {book['author']}, read: {read}")
+    for book in database.get_all_books():
+        read = 'YES' if book[2] else 'NO' # book[3] will be a boolean value
+        print(f'{book[0]} by {book[1]} — Read: {read}')
+
 
 def prompt_read_book():
     name = input('Enter the name of the book you just finished reading: ')
