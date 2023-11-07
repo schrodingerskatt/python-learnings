@@ -1,0 +1,5 @@
+name,age,university,degree
+Rolf,25,MIT,Mathematics
+Sheela,21,UCLA,Chemistry
+Rocky,19,NYU,Fashion
+Ananya,21,Stanford,Computer Science
