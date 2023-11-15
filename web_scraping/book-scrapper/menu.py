@@ -2,7 +2,7 @@ from app import books
 
 USER_CHOICE = '''Enter one of the following
 
-- 'b' to look at top rated books
+- 'b' to look at 5-star books
 - 'c' to look at the cheapest books
 - 'n' to just get the next available book on the page
 - 'q' to exit
