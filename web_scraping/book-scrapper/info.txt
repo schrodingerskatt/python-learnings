@@ -1,0 +1,5 @@
+1. Each book : div.page_inner section li.col-xs-6
+2. Name : article.product_pod h3 a
+3. Link : article.product_pod h3 a
+4. Price : article.product_pod p.price_color
+5. Rating : article.product_pod p.star-rating
